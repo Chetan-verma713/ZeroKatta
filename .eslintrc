@@ -17,6 +17,7 @@
     "react/jsx-no-useless-fragment": "off",
     "jsx-a11y/control-has-associated-label": "off",
     "react/button-has-type": "off",
-    "react/self-closing-comp": "off"
+    "react/self-closing-comp": "off",
+    "no-unused-vars": "warn"
   }
 }
