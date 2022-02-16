@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/ZeroKatta/static/css/main.6d54cc78.css",
+    "main.js": "/ZeroKatta/static/js/main.d60f0a60.js",
+    "static/js/787.a6b7a402.chunk.js": "/ZeroKatta/static/js/787.a6b7a402.chunk.js",
+    "index.html": "/ZeroKatta/index.html",
+    "main.6d54cc78.css.map": "/ZeroKatta/static/css/main.6d54cc78.css.map",
+    "main.d60f0a60.js.map": "/ZeroKatta/static/js/main.d60f0a60.js.map",
+    "787.a6b7a402.chunk.js.map": "/ZeroKatta/static/js/787.a6b7a402.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.6d54cc78.css",
+    "static/js/main.d60f0a60.js"
+  ]
+}
