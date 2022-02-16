@@ -1,43 +1,77 @@
 import React, { useState } from 'react';
 import Board from './components/Board';
+import History from './components/History';
+
 import { calculateWinner } from './components/Helper';
 
 import './styles/root.scss';
+import StatusMessage from './components/StatusMessage';
+
+const NEW_GAME = [{ board: Array(9).fill(null), isXNext: true }];
 
 const App = () => {
-  const [board, setBoard] = useState(Array(9).fill(null));
-  const [isXNext, setIsXNext] = useState(false);
+  const [history, setHistory] = useState(NEW_GAME);
 
-  const winner = calculateWinner(board);
+  const [currMove, setCurrMove] = useState(0);
 
-  const message = winner
-    ? `Winner is ${winner}`
-    : `Next player is ${!isXNext ? 'X' : 'O'}`;
+  const curr = history[currMove];
 
-  // console.log(winner);
+  const { winner, winningSquares } = calculateWinner(curr.board);
+
+  // console.log(history);
 
   // business logic
   const handleSquareClick = position => {
-    if (board[position] || winner) {
+    if (curr.board[position] || winner) {
       return;
     }
-    setBoard(prev => {
-      return prev.map((square, pos) => {
+    setHistory(prev => {
+      const last = prev[prev.length - 1];
+      const newBoard = last.board.map((square, pos) => {
         if (pos === position) {
-          return isXNext ? 'O' : 'X';
+          return last.isXNext ? 'O' : 'X';
         }
+
         return square;
       });
+
+      return prev.concat({ board: newBoard, isXNext: !last.isXNext });
     });
-    setIsXNext(prev => !isXNext);
+
+    setCurrMove(prev => prev + 1);
+  };
+
+  const moveTo = move => {
+    setCurrMove(move);
+  };
+
+  const startNewGame = () => {
+    setHistory(NEW_GAME);
+    setCurrMove(0);
   };
 
   // alert('Welcome in Tic Tac Toe');
   return (
     <div className="app">
-      <h1>TIC TAC TOE!</h1>
-      <h3>{message}</h3>
-      <Board board={board} handleSquareClick={handleSquareClick} />
+      <h1>
+        TIC <span className="text-green">TAC</span> TOE!
+      </h1>
+      <StatusMessage curr={curr} winner={winner} />
+      <Board
+        board={curr.board}
+        handleSquareClick={handleSquareClick}
+        winningSquares={winningSquares}
+      />
+      <br />
+      <button
+        onClick={startNewGame}
+        className={`btn-reset ${winner ? 'active' : ''}`}
+      >
+        Start New Game
+      </button>
+
+      <History history={history} moveTo={moveTo} currMove={currMove} />
+      <div className="bg-balls"></div>
     </div>
   );
 };
